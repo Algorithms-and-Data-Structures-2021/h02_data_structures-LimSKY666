@@ -13,7 +13,7 @@ namespace itis {
             throw std::invalid_argument("ArrayList::capacity must be positive");
         }
 
-    // Tip 1: используйте std::fill для заполнения выделенных ячеек массива значением Element::UNINITIALIZED
+        // Tip 1: используйте std::fill для заполнения выделенных ячеек массива значением Element::UNINITIALIZED
         data_ = new Element[capacity_]{};
         std::fill(data_, data_ + capacity_, Element::UNINITIALIZED);
     }
@@ -25,12 +25,12 @@ namespace itis {
         }
         size_ = 0;
         capacity_ = 0;
-    // Tip 1: высвободите выделенную память
-    // Tip 2: не забудьте про логическую целостность объекта (инвариантность)
+        // Tip 1: высвободите выделенную память
+        // Tip 2: не забудьте про логическую целостность объекта (инвариантность)
     }
 
     void ArrayList::Add(Element e) {
-    // Tip 1: используйте метод resize(new_capacity) для расширения емкости массива
+        // Tip 1: используйте метод resize(new_capacity) для расширения емкости массива
         if (size_ == capacity_) {
             resize(capacity_ + kCapacityGrowthCoefficient);
         }
@@ -41,23 +41,23 @@ namespace itis {
 
     void ArrayList::Insert(int index, Element e) {
         if (index != 0 && index != size_) {
-    // index = 0 и index == size это особые случаи, при которых всегда можно выполнить операцию вставки
+            // index = 0 и index == size это особые случаи, при которых всегда можно выполнить операцию вставки
             internal::check_out_of_range(index, 0, size_);
         }
 
 
-    // Tip 1: используйте метод resize(new_capacity) для расширения емкости массива
+        // Tip 1: используйте метод resize(new_capacity) для расширения емкости массива
         if (size_ == capacity_) {
-            resize(capacity_ + 1);
+            resize(capacity_ + kCapacityGrowthCoefficient);
         }
 
         assert(size_ < capacity_); // я ни в коем случае не дам вам совершить ошибку всей вашей жизни
-        for (int i = size_; i >= index; i--) {
-            data_[i] = data_[i - 1];
-        }
 
+        std::copy(data_ + index, data_ + size_, data_ + index + 1);
         data_[index] = e;
-        size_++;
+        size_ += 1;
+
+
     }
 
     void ArrayList::Set(int index, Element value) {
@@ -68,8 +68,8 @@ namespace itis {
 
     Element ArrayList::Remove(int index) {
         internal::check_out_of_range(index, 0, size_);
-    // Tip 1: можете использовать std::copy для сдвига элементов влево
-    // Tip 2: не забудьте задать значение Element::UNINITIALIZED освободившейся ячейке
+        // Tip 1: можете использовать std::copy для сдвига элементов влево
+        // Tip 2: не забудьте задать значение Element::UNINITIALIZED освободившейся ячейке
         Element returnElement = data_[index];
         for (int i = index; i < size_ - 1; i++) {
             data_[i] = data_[i + 1];
@@ -87,12 +87,12 @@ namespace itis {
 
     Element ArrayList::Get(int index) const {
         internal::check_out_of_range(index, 0, size_);
-    // напишите свой код здесь ...
+        // напишите свой код здесь ...
         return data_[index];
     }
 
     int ArrayList::IndexOf(Element e) const {
-    // напишите свой код здесь ...
+        // напишите свой код здесь ...
         for (int i = 0; i < size_; i++) {
             if (data_[i] == e) {
                 return i;
