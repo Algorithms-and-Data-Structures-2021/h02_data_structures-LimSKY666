@@ -45,6 +45,7 @@ namespace itis {
             internal::check_out_of_range(index, 0, size_);
         }
 
+
     // Tip 1: используйте метод resize(new_capacity) для расширения емкости массива
         if (size_ == capacity_) {
             resize(capacity_ + 1);
