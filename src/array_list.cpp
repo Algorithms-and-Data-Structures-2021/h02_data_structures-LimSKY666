@@ -46,15 +46,15 @@ namespace itis {
         }
 
     // Tip 1: используйте метод resize(new_capacity) для расширения емкости массива
-        if (size_+1 > capacity_) {
-            resize(capacity_ + kCapacityGrowthCoefficient);
+        if (size_ == capacity_) {
+            resize(capacity_ + 1);
         }
 
         assert(size_ < capacity_); // я ни в коем случае не дам вам совершить ошибку всей вашей жизни
-
         for (int i = size_; i >= index; i--) {
             data_[i] = data_[i - 1];
         }
+
         data_[index] = e;
         size_++;
     }
